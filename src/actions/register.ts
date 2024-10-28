@@ -1,7 +1,7 @@
 import * as z from "zod"
 import bcrypt from "bcrypt";
 
-import {RegisterSchema} from "../schemas";
+import {RegisterSchema} from "@/schemas";
 import prisma from "../../prisma/prisma-client";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
@@ -11,7 +11,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Неправильные поля!" };
     }
 
-    const {name, email, password} = validated.data;
+    const {fullName, email, password} = validated.data;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const existing = await prisma.user.findUnique({
@@ -23,7 +23,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
 
     await prisma.user.create({
-        data: { name, email, password: hashedPassword}
+        data: { fullName, email, password: hashedPassword}
     })
 
     return { success: "user created"}

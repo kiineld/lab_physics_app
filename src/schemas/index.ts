@@ -10,7 +10,7 @@ export const LoginSchema  = z.object({
 });
 
 export const RegisterSchema  = z.object({
-    name: z.string().min(1, {
+    fullName: z.string().min(1, {
        message: "Имя обязяательно для ввода!"
     }),
     email: z.string().email({

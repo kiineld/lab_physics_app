@@ -1,7 +1,7 @@
 import * as z from "zod"
 import bcrypt from "bcrypt";
 
-import {LoginSchema} from "../schemas";
+import {LoginSchema} from "@/schemas";
 import prisma from "../../prisma/prisma-client";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
