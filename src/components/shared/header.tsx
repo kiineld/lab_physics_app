@@ -1,7 +1,10 @@
+"use client"
+
 import {buttonVariants} from "@/components/ui";
-import {ArrowRight, User} from "lucide-react";
+import {ArrowLeft, ArrowRight, User} from "lucide-react";
 import {Separator} from "@/components/ui";
 import Link from "next/link";
+
 
 export function Header () {
     const links = [
@@ -28,13 +31,16 @@ export function Header () {
     ]
 
     return(
-        <div className="mt-2 mb-5">
-            <div className="sm:flex hidden justify-center items-center min-h-[4vh]">
+        <div>
+            <div className="sm:inline-flex w-full hidden justify-center items-center min-h-[4vh] fixed bg-white rounded-b-md shadow">
                 {/* LEFT PART OF HEADER */}
-                <div className="gap-2 flex mr-auto ml-10">
+                <div className="gap-2 flex mr-auto ml-10 py-3">
                     {
                         links.map((item) =>
-                            <Link key={item.id} href={item.link} className={buttonVariants({variant: "ghost", className: "underline underline-offset-4"})}>
+                            <Link key={item.id} href={item.link} className={buttonVariants({
+                                variant: "ghost",
+                                className: "underline underline-offset-4"
+                            })}>
                                 {item.title}
                             </Link>
                         )
@@ -43,8 +49,8 @@ export function Header () {
 
                 {/* RIGHT PART OF HEADER */}
                 <div className="gap-2 flex mr-10">
-                    <Link href="/auth"
-                       className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
+                    <Link href="/auth/login"
+                          className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
                         Войти
                         <Separator orientation="vertical"/>
                         <User className="relative group-hover:opacity-0 duration-250 transition"/>
@@ -55,13 +61,16 @@ export function Header () {
                 </div>
             </div>
 
-            <div className="flex sm:hidden justify-center items-center min-h-[4vh]">
-                <div className="absolute top-2 right-2">
-                    <Link href="/auth"
-                       className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
-                        <User className="relative group-hover:opacity-0 duration-250 transition"/>
-                        <ArrowRight
-                            className="opacity-0 group-hover:opacity-100 duration-300 transition absolute right-4 -translate-x-2 group-hover:translate-x-0"/>
+            <div className="inline-flex w-full fixed sm:hidden justify-center items-center min-h-[8vh] bg-white rounded-b-md shadow">
+                <div className="absolute right-2">
+                    <Link href="/auth/login" className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
+                        <User className="relative"/>
+                    </Link>
+                </div>
+
+                <div className="absolute left-2">
+                    <Link href="/" className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
+                        <ArrowLeft className="relative"/>
                     </Link>
                 </div>
             </div>

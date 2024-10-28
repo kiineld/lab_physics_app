@@ -18,7 +18,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
         <html lang="ru">
             <body className={nunito.className}>
                 <Header/>
-                <div className="max-w-screen-xl w-[85vw] min-h-screen mx-auto ring-8">
+                <div className="max-w-screen-xl w-[85vw] min-h-screen mx-auto">
                     {children}
                 </div>
             </body>
