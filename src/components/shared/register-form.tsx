@@ -4,7 +4,7 @@ import * as z from "zod"
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui";
-import {RegisterSchema} from "../../schemas";
+import {RegisterSchema} from "@/schemas";
 import { Input } from "@/components/ui"
 import {
     Form,
@@ -26,7 +26,7 @@ export function RegisterForm() {
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
         defaultValues:{
-            name: "",
+            fullName: "",
             email: "",
             password: "",
         }
@@ -44,7 +44,7 @@ export function RegisterForm() {
                     <div className="space-y-4 mb-5">
                         <FormField
                             control={form.control}
-                            name = "name"
+                            name = "fullName"
                             render = {({field}) => (
                                 <FormItem>
                                     <FormLabel className="text-sm sm:text-md">

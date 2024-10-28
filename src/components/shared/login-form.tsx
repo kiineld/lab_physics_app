@@ -4,7 +4,7 @@ import * as z from "zod"
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui";
-import { LoginSchema } from "../../schemas";
+import { LoginSchema } from "@/schemas";
 import { Input } from "@/components/ui"
 import {
     Form,
