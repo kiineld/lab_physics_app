@@ -4,7 +4,12 @@ import Vk from "@auth/core/providers/vk";
 import Google from "next-auth/providers/google"
 
 export const {handlers, signIn, signOut, auth} = NextAuth({
-    providers: [GitHub, Vk, Google],
+    providers: [GitHub, Vk({
+      accessTokenUrl: `https://oauth.vk.com/access_token?v=${apiVersion}`,
+      requestTokenUrl: `https://oauth.vk.com/access_token?v=${apiVersion}`,
+      authorizationUrl: `https://oauth.vk.com/authorize?response_type=code&v=${apiVersion}`,
+      profileUrl: `https://api.vk.com/method/users.get?fields=photo_100&v=${apiVersion}`,
+    }), Google],
 })
 
 
