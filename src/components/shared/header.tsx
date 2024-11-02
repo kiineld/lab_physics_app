@@ -1,12 +1,12 @@
-"use client"
-
-import {buttonVariants} from "@/components/ui";
+import {Button, buttonVariants} from "@/components/ui";
 import {ArrowLeft, ArrowRight, User} from "lucide-react";
 import {Separator} from "@/components/ui";
 import Link from "next/link";
+import {auth, signOut} from "@/shared/constants/auth-options";
+import React from "react";
 
 
-export function Header () {
+export async function Header () {
     const links = [
         {
             id: "1",
@@ -30,6 +30,8 @@ export function Header () {
         }
     ]
 
+    const session = await auth()
+
     return(
         <div>
             <div className="sm:inline-flex w-full hidden justify-center items-center min-h-[4vh] fixed bg-white rounded-b-md shadow">
@@ -49,24 +51,46 @@ export function Header () {
 
                 {/* RIGHT PART OF HEADER */}
                 <div className="gap-2 flex mr-10">
-                    <Link href="/auth/login"
-                          className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
-                        Войти
-                        <Separator orientation="vertical"/>
-                        <User className="relative group-hover:opacity-0 duration-250 transition"/>
-                        <ArrowRight
-                            className="opacity-0 group-hover:opacity-100 duration-300 transition absolute right-4 -translate-x-2 group-hover:translate-x-0"/>
+                    {session && session?.user ? (
+                        <Link href="/dashboard" className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
+                            {session.user.name}
+                            <Separator orientation="vertical"/>
+                            <User/>
+                        </Link>
+                    ) : (
+                        <>
+                            <Link type="submit" href="/auth/login"
+                                  className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
+                                Войти
+                                <Separator orientation="vertical"/>
+                                <User className="relative group-hover:opacity-0 duration-250 transition"/>
+                                <ArrowRight
+                                    className="opacity-0 group-hover:opacity-100 duration-300 transition absolute right-4 -translate-x-2 group-hover:translate-x-0"/>
 
-                    </Link>
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
 
             <div className="inline-flex w-full fixed sm:hidden justify-center items-center min-h-[8vh] bg-white rounded-b-md shadow">
-                <div className="absolute right-2">
-                    <Link href="/auth/login" className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
-                        <User className="relative"/>
-                    </Link>
-                </div>
+                {session && session?.user ? (
+                    <>
+                        <form action={async () => {
+                            "use server"
+                            await signOut({redirectTo: "/"})
+                        }}>
+                            <Button type="submit">{session.user.name}Выйти</Button>
+                        </form>
+                    </>
+                ) : (
+                    <div className="absolute right-2">
+                        <Link href="/auth/login"
+                              className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
+                            <User className="relative"/>
+                        </Link>
+                    </div>
+                )}
 
                 <div className="absolute left-2">
                     <Link href="/" className={buttonVariants({variant: "default", className: "group relative gap-2"})}>
