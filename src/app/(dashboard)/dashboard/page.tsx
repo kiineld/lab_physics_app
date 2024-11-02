@@ -1,5 +1,5 @@
 import React from 'react'
-import {auth, signIn, signOut} from "@/shared/constants/auth-options";
+import {auth, signOut} from "@/shared/constants/auth-options";
 import {Button, buttonVariants} from "@/components/ui";
 import Link from "next/link";
 
