@@ -1,30 +1,34 @@
-import {AuthOptions} from 'next-auth';
-import GitHubProvider from 'next-auth/providers/github';
-import GoogleProvider from 'next-auth/providers/google';
-import {UserRole} from "@prisma/client";
+import NextAuth from 'next-auth';
+import GitHub from 'next-auth/providers/github';
+import Vk from "@auth/core/providers/vk";
+import Google from "next-auth/providers/google"
+
+export const {handlers, signIn, signOut, auth} = NextAuth({
+    providers: [GitHub, Vk, Google],
+})
 
 
-export const authOptions: AuthOptions = {
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID || '',
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-        }),
-        GitHubProvider({
-            clientId: process.env.GITHUB_ID || '',
-            clientSecret: process.env.GITHUB_SECRET || '',
-            profile(profile) {
-                return {
-                    id: profile.id,
-                    name: profile.name || profile.login,
-                    email: profile.email,
-                    role: 'USER' as UserRole,
-                };
-            },
-        }),
-    ],
-    secret: process.env.NEXTAUTH_SECRET,
-    session: {
-        strategy: 'jwt',
-    },
-}
+    // callbacks: {
+    //     async signIn(user, account, profile) {
+    //         if (account.provider === 'credentials') {
+    //             // Handle password login
+    //             const hashedPassword = await bcrypt.hash(account.email, 10);
+    //             if (account.email === 'your_email' && hashedPassword === 'your_hashed_password') {
+    //                 return true;
+    //             }
+    //         }
+    //         return false;
+    //     },
+    // },
+    // providers: [
+    //     CredentialsProvider({
+    //         name: 'Credentials',
+    //         credentials: {
+    //             username: { label: 'Email', type: 'email' },
+    //             password: { label: 'Password', type: 'password' },
+    //         },
+    //         async authorize(credentials) {
+    //             // Validate the password against the hashed password in your database
+    //             const user = await prisma.user.findFirst({ where: { email: credentials.username } });
+    //             if (user && await bcrypt.compare(credentials.password, user.password)) {
+

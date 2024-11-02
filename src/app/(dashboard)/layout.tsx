@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 
 export default function DashBoardLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <div>
-            <div className="max-w-screen-xl w-[85vw] min-h-screen mx-auto">
+        <main>
+            <div className="max-w-screen-xl w-[85vw] min-h-screen mx-auto ring-8">
                 {children}
             </div>
-        </div>
+        </main>
     );
 }
