@@ -2,6 +2,8 @@ import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import Vk from "@auth/core/providers/vk";
 import Google from "next-auth/providers/google"
+const apiVersion = "5.199"
+
 
 export const {handlers, signIn, signOut, auth} = NextAuth({
     providers: [GitHub, Vk({
